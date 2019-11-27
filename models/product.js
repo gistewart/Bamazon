@@ -16,6 +16,14 @@ module.exports = function(sequelize, DataTypes) {
         stock_quantity: {
             type: DataTypes.INTEGER,
             allowNull: false
+        },
+        createdAt: {
+            type: DataTypes.STRING,
+            defaultValue: DataTypes.NOW
+        },
+        updatedAt: {
+            type: DataTypes.STRING,
+            defaultValue: DataTypes.NOW
         }
     });
 
