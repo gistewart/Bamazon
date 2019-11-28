@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Bamazon</title>
+    <title>Bamazon products</title>
 
     <!-- Bootstrap link -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -16,7 +16,6 @@
 </head>
 
 <body>
-
 
     <div class="container product-container w-65">
         <table class="table" id="product-list">
@@ -31,10 +30,27 @@
 
             </tbody>
         </table>
+    </div>
 
-        <button type="submit" class="btn btn-primary btn-md" id="order-btn">Confirm</button>
+    <div class="container w-75">
+
+        <div class="results">
+            <div class="card">
+                <h1>Order Confirmation</h1>
+                <div class="card-body">
+                </div>
+                <h4>
+                    <div class="list-group-item" id="productSelected"></div>
+                    <div class="list-group-item" id="productPrice"></div>
+                    <label for "quantityRequested">Quantity you would like to buy:</label>
+                    <input id="quantityRequested" type="number" name="name" value="0">
+                </h4>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-md" id="check-availability">Check availability</button>
 
     </div>
+
 
     <!-- jQuery Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
