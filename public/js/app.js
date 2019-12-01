@@ -1,24 +1,30 @@
 $(document).ready(function() {
 
-    var productList = $("tbody");
+    var productList = $(".product-container tbody");
     var productContainer = $(".product-container");
-    let quantityRequested = $("#quantityRequested");
 
     //Event listeners
     $(document).on("click", ".order-product", handleAddToCartPress);
-    // $(document).on("click", ".check-availability", handleCheckAvailability);
+    $(document).on("click", "#view-cart", viewCart);
+    $(document).on("click", "#place-order", placeOrder);
 
     getProducts();
 
     // Function for creating a new list row for products
     function createProductRow(data) {
+
         console.log(data);
         var newTr = $("<tr>");
         newTr.data("product", data);
         newTr.append("<td>" + data.product_name + "</td>");
-        newTr.append("<td>" + data.price + "</td>");
+
+        //to format price to currency
+        var dataPrice = data.price;
+        dataPrice = dataPrice.toLocaleString('us-US', { style: 'currency', currency: 'USD' });
+        newTr.append("<td class='productPrice'>" + dataPrice + "</td>");
+
         newTr.append("<td> <button class='order-product btn btn-warning' >Add to cart</button></td>");
-        // newTr.append("<td> <a href='/cart.html' class='order-product btn btn-warning' role = 'button'>Add to cart</a></td>");
+
         return newTr;
     }
 
@@ -43,37 +49,116 @@ $(document).ready(function() {
         } else {
             renderEmpty();
         }
+        $(".view-cart-button-container").hide();
+        $(".cart-header-container").hide();
+        $(".cart-container").hide();
+        $(".place-order-container").hide();
+        $(".continue-shopping-container").hide();
     }
 
-    let listItemData = "";
-    let stockQuantity;
+    let productID;
+    // let productPrice;
 
-    // Function for handling what happens when the Add to cart button is pressed
+    // Function for handling what happens when the "Add to cart" button is pressed
     function handleAddToCartPress() {
         var listItemData = $(this).parent("td").parent("tr").data("product");
-        var id = listItemData.id;
-        console.log(id);
+        productID = listItemData.id;
+        console.log("cart item id: " + productID);
 
         productName = listItemData.product_name;
-        console.log(productName);
+        console.log("cart product name: " + productName);
         $("#productSelected").text(productName);
 
-        productPrice = listItemData.price;
-        console.log(productPrice);
-        $("#productPrice").text(productPrice);
+        productPrice1 = listItemData.price;
+        productPrice2 = productPrice1.toLocaleString('us-US', { style: 'currency', currency: 'USD' });
+        console.log("cart item price: " + productPrice2);
+        $("#productPrice").text(productPrice2);
 
         stockQuantity = listItemData.stock_quantity;
-        console.log(stockQuantity);
+        console.log("stock quantity: " + stockQuantity);
 
-        handleCheckAvailability2();
+        $(".view-cart-button-container").show();
     }
 
-    // Function to display cart details
-    // function displayCart() {}
-
-    function handleCheckAvailability2() {
-        console.log("test message");
-        console.log(stockQuantity);
+    //Function for handling what happens when "View Cart Details" button is pressed
+    function viewCart() {
+        $(".product-header-container").hide();
+        $(".product-container").hide();
+        $(".view-cart-button-container").hide();
+        $(".cart-header-container").show();
+        $(".cart-container").show();
+        $(".place-order-container").show();
     }
+
+    let quantityRequested = 0;
+    let totalOrderCost = 0;
+    var updating = false;
+
+    //Function for handling what happens when "Place Order" button is pressed
+    function placeOrder() {
+        // console.log("stock quantity: " + stockQuantity);
+
+        quantityRequested = $("#quantity-requested").val();
+        console.log("quantity requested: " + quantityRequested);
+
+        if (stockQuantity < quantityRequested) {
+            console.log("not enough stock");
+            showModalNotOkay();
+        } else {
+            console.log("Product Price: " + productPrice1);
+
+
+            totalOrderCost1 = productPrice1 * quantityRequested;
+            console.log("Order cost: " + totalOrderCost1);
+            totalOrderCost2 = totalOrderCost1.toLocaleString('us-US', { style: 'currency', currency: 'USD' });
+
+            $("#orderCost").text(totalOrderCost2);
+            console.log("order fulfilled");
+
+            updating = true;
+            console.log(updating);
+            updateQuantity();
+            showModalOkay();
+        }
+        continueShopping();
+    }
+
+    function showModalOkay() {
+        $('#exampleModalOkay').modal('show');
+    }
+
+    function showModalNotOkay() {
+        $('#exampleModalNotOkay').modal('show');
+    }
+
+    function continueShopping() {
+        $(".place-order-container").hide();
+        $(".continue-shopping-container").show();
+    }
+
+    function updateQuantity() {
+        if (updating) {
+            console.log(quantityRequested);
+            console.log(stockQuantity);
+            let newStockQuantity = stockQuantity - quantityRequested;
+            console.log(newStockQuantity);
+
+            let updatedProduct = {
+                id: productID,
+                stock_quantity: newStockQuantity
+            }
+            console.log(updatedProduct);
+            // updateDB();
+        }
+    }
+
+    // function updateDB(updatedProduct) {
+    //     $.ajax({
+    //         method: "PUT",
+    //         url: "/api/products",
+    //         data: updatedProduct
+    //     });
+
+    // }
 
 });

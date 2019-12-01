@@ -11,13 +11,12 @@ module.exports = function(app) {
         });
     });
 
-    app.post("/api/products", function(req, res) {
-        db.Product.findAll({
-            //if insufficient quantity, display phrase and stop order
-            //if sufficient quantiy, update db to show remaining quantity, then show customer total cost of order
-        })
+    app.put("/api/products", function(req, res) {
+        db.Product.update(req.body, {
+            where: {
+                id: req.body.id
+            }
+        });
 
-
-    })
-
+    });
 };

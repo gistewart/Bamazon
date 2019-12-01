@@ -1,0 +1,26 @@
+.product-header-container,
+.cart-header-container {
+    margin-top: 10px;
+}
+
+td {
+    text-transform: capitalize;
+}
+
+.priceHeader,
+.productPrice {
+    text-align: right;
+    padding-right: 120px !important;
+}
+
+.cartHeader {
+    padding-left: 20px !important;
+}
+
+.view-cart-button-container {
+    text-align: center;
+}
+
+#quantity-requested {
+    border: solid 1px grey;
+}
