@@ -7,6 +7,7 @@ $(document).ready(function() {
     $(document).on("click", ".order-product", handleAddToCartPress);
     $(document).on("click", "#view-cart", viewCart);
     $(document).on("click", "#place-order", placeOrder);
+    $(document).on("click", "#continue-shopping", continueShopping);
 
     getProducts();
 
@@ -107,7 +108,6 @@ $(document).ready(function() {
         } else {
             console.log("Product Price: " + productPrice1);
 
-
             totalOrderCost1 = productPrice1 * quantityRequested;
             console.log("Order cost: " + totalOrderCost1);
             totalOrderCost2 = totalOrderCost1.toLocaleString('us-US', { style: 'currency', currency: 'USD' });
@@ -120,20 +120,30 @@ $(document).ready(function() {
             updateQuantity();
             showModalOkay();
         }
-        continueShopping();
+        // continueShopping();
     }
 
     function showModalOkay() {
-        $('#exampleModalOkay').modal('show');
+        $('#modalOkay').modal('show');
     }
 
     function showModalNotOkay() {
-        $('#exampleModalNotOkay').modal('show');
+        $('#modalNotOkay').modal('show');
     }
 
-    function continueShopping() {
+    $('#modalOkay').on("hide.bs.modal", function() {
         $(".place-order-container").hide();
         $(".continue-shopping-container").show();
+    })
+
+    $('#modalNotOkay').on("hide.bs.modal", function() {
+        $(".place-order-container").hide();
+        $(".continue-shopping-container").show();
+    })
+
+    //Function for handling what happens when "Continue Shopping" button is pressed
+    function continueShopping() {
+        location.reload();
     }
 
     function updateQuantity() {
