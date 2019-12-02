@@ -158,17 +158,19 @@ $(document).ready(function() {
                 stock_quantity: newStockQuantity
             }
             console.log(updatedProduct);
-            // updateDB();
+            updateDB(updatedProduct)
+                .then(function(res) {
+                    console.log(res)
+                })
         }
     }
 
-    // function updateDB(updatedProduct) {
-    //     $.ajax({
-    //         method: "PUT",
-    //         url: "/api/products",
-    //         data: updatedProduct
-    //     });
-
-    // }
+    function updateDB(updatedProduct) {
+        return $.ajax({
+            method: "PUT",
+            url: "/api/products",
+            data: updatedProduct
+        })
+    }
 
 });
