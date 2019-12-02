@@ -24,7 +24,7 @@ $(document).ready(function() {
         dataPrice = dataPrice.toLocaleString('us-US', { style: 'currency', currency: 'USD' });
         newTr.append("<td class='productPrice'>" + dataPrice + "</td>");
 
-        newTr.append("<td> <button class='order-product btn btn-warning' >Add to cart</button></td>");
+        newTr.append("<td> <button class='order-product btn btn-warning btn-sm' >Add to cart</button></td>");
 
         return newTr;
     }
