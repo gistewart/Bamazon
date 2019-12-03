@@ -106,7 +106,7 @@ $(document).ready(function() {
             console.log("not enough stock");
             showModalNotOkay();
         } else {
-            console.log("Product Price: " + productPrice1);
+            // console.log("Product Price: " + productPrice1);
 
             totalOrderCost1 = productPrice1 * quantityRequested;
             console.log("Order cost: " + totalOrderCost1);
@@ -116,7 +116,7 @@ $(document).ready(function() {
             console.log("order fulfilled");
 
             updating = true;
-            console.log(updating);
+            // console.log(updating);
             updateQuantity();
             showModalOkay();
         }
@@ -148,10 +148,10 @@ $(document).ready(function() {
 
     function updateQuantity() {
         if (updating) {
-            console.log(quantityRequested);
-            console.log(stockQuantity);
+            // console.log(quantityRequested);
+            // console.log("Stock quantity: " + stockQuantity);
             let newStockQuantity = stockQuantity - quantityRequested;
-            console.log(newStockQuantity);
+            console.log("Remaining stock: " + newStockQuantity);
 
             let updatedProduct = {
                 id: productID,
@@ -160,7 +160,7 @@ $(document).ready(function() {
             console.log(updatedProduct);
             updateDB(updatedProduct)
                 .then(function(res) {
-                    console.log(res)
+                    // console.log(res)
                 })
         }
     }
