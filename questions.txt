@@ -1,1 +1,0 @@
-console log of selected cart items disappears on new html page
