@@ -58,6 +58,10 @@ $(document).ready(function() {
         $(".continue-shopping-container").hide();
     }
 
+    function renderEmpty() {
+
+    };
+
     let productID;
     // let productPrice;
 
