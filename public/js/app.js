@@ -32,6 +32,7 @@ $(document).ready(function() {
     // Function for retrieving products and getting them ready to be rendered to the page
     function getProducts() {
         $.get("/api/products", function(data) {
+            console.log(data);
             var rowsToAdd = [];
             for (var i = 0; i < data.length; i++) {
                 rowsToAdd.push(createProductRow(data[i]));
