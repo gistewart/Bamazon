@@ -38,4 +38,4 @@ This is not an original app. Instead, this project was prepared as part of my co
 
 ## Deployed link
 
-https://infinite-falls-73524.herokuapp.com/
+https://dashboard.heroku.com/apps/murmuring-wildwood-59724
