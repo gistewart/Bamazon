@@ -38,4 +38,4 @@ This is not an original app. Instead, this project was prepared as part of my co
 
 ## Deployed link
 
-https://dashboard.heroku.com/apps/murmuring-wildwood-59724
+https://murmuring-wildwood-59724.herokuapp.com/
