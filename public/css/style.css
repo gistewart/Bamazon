@@ -1,26 +1,30 @@
+#start-shopping {
+  margin-top: 30px;
+}
+
 .product-header-container,
 .cart-header-container {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 td {
-    text-transform: capitalize;
+  text-transform: capitalize;
 }
 
 .priceHeader,
 .productPrice {
-    text-align: right;
-    padding-right: 120px !important;
+  text-align: right;
+  padding-right: 120px !important;
 }
 
 .cartHeader {
-    padding-left: 20px !important;
+  padding-left: 20px !important;
 }
 
 .view-cart-button-container {
-    text-align: center;
+  text-align: center;
 }
 
 #quantity-requested {
-    border: solid 1px grey;
+  border: solid 1px grey;
 }
