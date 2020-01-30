@@ -44,8 +44,13 @@ $(document).ready(function() {
 
   // Function for retrieving products and getting them ready to be rendered to the page
   function getProducts() {
+    $(".welcome-message-container").hide();
+    $(".view-cart-button-container").hide();
     $(".product-header-container").show();
     $(".product-container").show();
+    $(".cart-header-container").hide();
+    $(".cart-container").hide();
+    $(".continue-shopping-container").hide();
     $.get("/api/products", function(data) {
       console.log(data);
       var rowsToAdd = [];
@@ -69,13 +74,6 @@ $(document).ready(function() {
     } else {
       renderEmpty();
     }
-
-    $(".welcome-message-container").hide();
-    $(".view-cart-button-container").hide();
-    // $(".cart-header-container").hide();
-    // $(".cart-container").hide();
-    // $(".place-order-container").hide();
-    // $(".continue-shopping-container").hide();
   }
 
   function renderEmpty() {}
@@ -130,13 +128,11 @@ $(document).ready(function() {
 
     quantityRequested = $("#quantity-requested").val();
     console.log("quantity requested: " + quantityRequested);
-
     if (stockQuantity < quantityRequested) {
       console.log("not enough stock");
       showModalNotOkay();
     } else {
       // console.log("Product Price: " + productPrice1);
-
       totalOrderCost1 = productPrice1 * quantityRequested;
       console.log("Order cost: " + totalOrderCost1);
       totalOrderCost2 = totalOrderCost1.toLocaleString("us-US", {
@@ -152,7 +148,6 @@ $(document).ready(function() {
       updateQuantity();
       showModalOkay();
     }
-    // continueShopping();
   }
 
   function showModalOkay() {
@@ -175,7 +170,8 @@ $(document).ready(function() {
 
   //Function for handling what happens when "Continue Shopping" button is pressed
   function continueShopping() {
-    location.reload();
+    // location.reload();
+    getProducts();
   }
 
   function updateQuantity() {
