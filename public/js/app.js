@@ -18,31 +18,6 @@ $(document).ready(function() {
   $(".place-order-container").hide();
   $(".continue-shopping-container").hide();
 
-  // getProducts();
-
-  // Function for creating a new list row for products
-  function createProductRow(data) {
-    console.log(data);
-    var newTr = $("<tr>");
-    newTr.data("product", data);
-    newTr.append("<td>" + data.product_name + "</td>");
-
-    //to format price to currency
-    var dataPrice = data.price;
-    dataPrice = dataPrice.toLocaleString("us-US", {
-      style: "currency",
-      currency: "USD"
-    });
-    newTr.append("<td class='productPrice'>" + dataPrice + "</td>");
-
-    newTr.append(
-      "<td> <button class='order-product btn btn-warning btn-sm' >Add to cart</button></td>"
-    );
-
-    return newTr;
-  }
-
-  // Function for retrieving products and getting them ready to be rendered to the page
   function getProducts() {
     $(".welcome-message-container").hide();
     $(".view-cart-button-container").hide();
@@ -53,33 +28,84 @@ $(document).ready(function() {
     $(".continue-shopping-container").hide();
     $.get("/api/products", function(data) {
       console.log(data);
-      var rowsToAdd = [];
       for (var i = 0; i < data.length; i++) {
-        rowsToAdd.push(createProductRow(data[i]));
+        var dataPrice = data[i].price;
+        dataPrice = dataPrice.toLocaleString("us-US", {
+          style: "currency",
+          currency: "USD"
+        });
+        $("#product-list").prepend(
+          "<tr><td>" +
+            data[i].product_name +
+            "</td><td class='productPrice'>" +
+            dataPrice +
+            "</td><td><button class = 'order-product btn btn-warning btn-sm' product-id='" +
+            data[i].id +
+            "'>Add to cart</button></td><tr>"
+        );
       }
-      renderProductList(rowsToAdd);
     });
   }
 
-  // function for rendering the list of products to the page
-  function renderProductList(rows) {
-    productList
-      .children()
-      .not(":last")
-      .remove();
-    productContainer.children(".alert").remove();
-    if (rows.length) {
-      console.log(rows);
-      productList.prepend(rows);
-    } else {
-      renderEmpty();
-    }
-  }
+  // Function for creating a new list row for products
+  // function createProductRow(data) {
+  //   console.log(data);
+  //   var newTr = $("<tr>");
+  //   newTr.data("product", data);
+  //   newTr.append("<td>" + data.product_name + "</td>");
 
-  function renderEmpty() {}
+  //to format price to currency
+  // var dataPrice = data.price;
+  // dataPrice = dataPrice.toLocaleString("us-US", {
+  //   style: "currency",
+  //   currency: "USD"
+  // });
+  // newTr.append("<td class='productPrice'>" + dataPrice + "</td>");
+
+  // newTr.append(
+  //   "<td> <button class='order-product btn btn-warning btn-sm' >Add to cart</button></td>"
+  // );
+
+  // return newTr;
+  // }
+
+  // Function for retrieving products and getting them ready to be rendered to the page
+  // function getProducts() {
+  //   $(".welcome-message-container").hide();
+  //   $(".view-cart-button-container").hide();
+  //   $(".product-header-container").show();
+  //   $(".product-container").show();
+  //   $(".cart-header-container").hide();
+  //   $(".cart-container").hide();
+  //   $(".continue-shopping-container").hide();
+  //   $.get("/api/products", function(data) {
+  //     console.log(data);
+  //     var rowsToAdd = [];
+  //     for (var i = 0; i < data.length; i++) {
+  //       rowsToAdd.push(createProductRow(data[i]));
+  //     }
+  //     renderProductList(rowsToAdd);
+  //   });
+  // }
+
+  // function for rendering the list of products to the page
+  // function renderProductList(rows) {
+  //   productList
+  //     .children()
+  //     .not(":last")
+  //     .remove();
+  //   productContainer.children(".alert").remove();
+  //   if (rows.length) {
+  //     console.log(rows);
+  //     productList.prepend(rows);
+  //   } else {
+  //     renderEmpty();
+  //   }
+  // }
+
+  // function renderEmpty() {}
 
   let productID;
-  // let productPrice;
 
   // Function for handling what happens when the "Add to cart" button is pressed
   function handleAddToCartPress() {
