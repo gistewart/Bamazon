@@ -3,21 +3,22 @@ $(document).ready(function() {
   var productContainer = $(".product-container");
 
   //Event listeners
-  //   $(document).on("click", "#start-shopping", getProducts);
+  $(document).on("click", "#start-shopping", getProducts);
   $(document).on("click", ".order-product", handleAddToCartPress);
   $(document).on("click", "#view-cart", viewCart);
   $(document).on("click", "#place-order", placeOrder);
   $(document).on("click", "#continue-shopping", continueShopping);
 
   //On page load
-  //   $(".product-header-container").hide();
-  //   $(".view-cart-button-container").hide();
-  //   $(".cart-header-container").hide();
-  //   $(".cart-container").hide();
-  //   $(".place-order-container").hide();
-  //   $(".continue-shopping-container").hide();
+  $(".product-header-container").hide();
+  $(".product-container").hide();
+  $(".view-cart-button-container").hide();
+  $(".cart-header-container").hide();
+  $(".cart-container").hide();
+  $(".place-order-container").hide();
+  $(".continue-shopping-container").hide();
 
-  getProducts();
+  // getProducts();
 
   // Function for creating a new list row for products
   function createProductRow(data) {
@@ -43,6 +44,8 @@ $(document).ready(function() {
 
   // Function for retrieving products and getting them ready to be rendered to the page
   function getProducts() {
+    $(".product-header-container").show();
+    $(".product-container").show();
     $.get("/api/products", function(data) {
       console.log(data);
       var rowsToAdd = [];
@@ -66,11 +69,13 @@ $(document).ready(function() {
     } else {
       renderEmpty();
     }
+
+    $(".welcome-message-container").hide();
     $(".view-cart-button-container").hide();
-    $(".cart-header-container").hide();
-    $(".cart-container").hide();
-    $(".place-order-container").hide();
-    $(".continue-shopping-container").hide();
+    // $(".cart-header-container").hide();
+    // $(".cart-container").hide();
+    // $(".place-order-container").hide();
+    // $(".continue-shopping-container").hide();
   }
 
   function renderEmpty() {}
