@@ -51,7 +51,7 @@ $(document).ready(function() {
             dataPrice +
             "' stock-quantity='" +
             data[i].stock_quantity +
-            "'>Add to cart</button></td><tr>"
+            "'>Add to cart</button></td></tr>"
         );
       }
     });
