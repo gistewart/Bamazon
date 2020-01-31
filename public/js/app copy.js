@@ -37,12 +37,8 @@ $(document).ready(function() {
             data[i].product_name +
             "</td><td class='productPrice'>" +
             dataPrice +
-            "</td><td><button class='order-product btn btn-warning btn-sm' product-id='" +
+            "</td><td><button class = 'order-product btn btn-warning btn-sm' product-id='" +
             data[i].id +
-            "' name-id='" +
-            data[i].product_name +
-            "' price-id='" +
-            dataPrice +
             "'>Add to cart</button></td><tr>"
         );
       }
@@ -58,17 +54,17 @@ $(document).ready(function() {
     //   .parent("tr")
     //   .data("product");
     var listItemData = $(this).attr("product-id");
+    var newName = $(this).attr("name-id");
+    console.log(newName);
     // productID = listItemData.id;
     productID = listItemData;
     console.log("cart item id: " + productID);
 
-    productName = $(this).attr("name-id");
+    productName = listItemData.product_name;
     console.log("cart product name: " + productName);
     $("#productSelected").text(productName);
 
-    // productPrice1 = listItemData.price;
-    productPrice1 = $(this).attr("price-id");
-    console.log("price: " + productPrice1);
+    productPrice1 = listItemData.price;
     productPrice2 = productPrice1.toLocaleString("us-US", {
       style: "currency",
       currency: "USD"
