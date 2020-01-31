@@ -23,9 +23,13 @@ $(document).ready(function() {
     $(".view-cart-button-container").hide();
     $(".product-header-container").show();
     $(".product-container").show();
+    $(".cart-header-container").hide();
+    $(".cart-container").hide();
+    $(".continue-shopping-container").hide();
 
     $.get("/api/products", function(data) {
       console.log(data);
+      $("#product-list").empty();
       for (var i = 0; i < data.length; i++) {
         var dataPrice = data[i].price;
         dataPrice = dataPrice.toLocaleString("us-US", {
@@ -41,42 +45,36 @@ $(document).ready(function() {
             data[i].id +
             "' name-id='" +
             data[i].product_name +
-            "' price-id='" +
+            "' price-id1='" +
+            data[i].price +
+            "' price-id2='" +
             dataPrice +
+            "' stock-quantity='" +
+            data[i].stock_quantity +
             "'>Add to cart</button></td><tr>"
         );
       }
     });
   }
 
-  let productID;
-
   // Function for handling what happens when the "Add to cart" button is pressed
   function handleAddToCartPress() {
-    // var listItemData = $(this)
-    //   .parent("td")
-    //   .parent("tr")
-    //   .data("product");
-    var listItemData = $(this).attr("product-id");
-    // productID = listItemData.id;
-    productID = listItemData;
+    productID = $(this).attr("product-id");
     console.log("cart item id: " + productID);
 
     productName = $(this).attr("name-id");
     console.log("cart product name: " + productName);
     $("#productSelected").text(productName);
 
-    // productPrice1 = listItemData.price;
-    productPrice1 = $(this).attr("price-id");
-    console.log("price: " + productPrice1);
-    productPrice2 = productPrice1.toLocaleString("us-US", {
-      style: "currency",
-      currency: "USD"
-    });
-    console.log("cart item price: " + productPrice2);
+    productPrice1 = $(this).attr("price-id1");
+    console.log("unformatted price: " + productPrice1);
+
+    productPrice2 = $(this).attr("price-id2");
+    console.log("formatted price: " + productPrice2);
+
     $("#productPrice").text(productPrice2);
 
-    stockQuantity = listItemData.stock_quantity;
+    stockQuantity = $(this).attr("stock-quantity");
     console.log("stock quantity: " + stockQuantity);
 
     $(".view-cart-button-container").show();
@@ -93,22 +91,18 @@ $(document).ready(function() {
   }
 
   let quantityRequested = 0;
-  let totalOrderCost = 0;
+  let totalOrderCost1 = 0;
   var updating = false;
 
   //Function for handling what happens when "Place Order" button is pressed
   function placeOrder() {
-    // console.log("stock quantity: " + stockQuantity);
-
-    quantityRequested = $("#quantity-requested").val();
+    quantityRequested = parseInt($("#quantity-requested").val());
     console.log("quantity requested: " + quantityRequested);
     if (stockQuantity < quantityRequested) {
       console.log("not enough stock");
       showModalNotOkay();
     } else {
-      // console.log("Product Price: " + productPrice1);
       totalOrderCost1 = productPrice1 * quantityRequested;
-      console.log("Order cost: " + totalOrderCost1);
       totalOrderCost2 = totalOrderCost1.toLocaleString("us-US", {
         style: "currency",
         currency: "USD"
@@ -118,7 +112,7 @@ $(document).ready(function() {
       console.log("order fulfilled");
 
       updating = true;
-      // console.log(updating);
+
       updateQuantity();
       showModalOkay();
     }
@@ -144,14 +138,12 @@ $(document).ready(function() {
 
   //Function for handling what happens when "Continue Shopping" button is pressed
   function continueShopping() {
-    // location.reload();
     getProducts();
   }
 
   function updateQuantity() {
     if (updating) {
-      // console.log(quantityRequested);
-      // console.log("Stock quantity: " + stockQuantity);
+      console.log("Stock quantity: " + stockQuantity);
       let newStockQuantity = stockQuantity - quantityRequested;
       console.log("Remaining stock: " + newStockQuantity);
 
@@ -160,9 +152,7 @@ $(document).ready(function() {
         stock_quantity: newStockQuantity
       };
       console.log(updatedProduct);
-      updateDB(updatedProduct).then(function(res) {
-        // console.log(res)
-      });
+      updateDB(updatedProduct).then(function(res) {});
     }
   }
 
